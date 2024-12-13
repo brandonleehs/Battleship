@@ -10,5 +10,6 @@ module.exports = {
     // aliases
     '^Ships(.*)$': '<rootDir>/src/model/ships$1',
     '^Model(.*)$': '<rootDir>/src/model$1',
+    '^Root(.*)$': '<rootDir>$1',
   },
 };

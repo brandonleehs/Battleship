@@ -3,7 +3,8 @@
     "baseUrl": "./",
     "paths": {
       "Ships/*": ["src/model/ships/*"],
-      "Model/*": ["src/model/*"]
+      "Model/*": ["src/model/*"],
+      "Root/*": [""]
     },
     "outDir": "./dist/",
     "noImplicitAny": true,

@@ -56,6 +56,7 @@ module.exports = {
     alias: {
       Ships: path.resolve(__dirname, 'src/model/ships/'),
       Model: path.resolve(__dirname, 'src/model/'),
+      Root: path.resolve(__dirname),
     },
   },
 };
