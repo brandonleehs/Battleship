@@ -1,31 +1,4 @@
-import Ship from 'Ships/Ship';
-
-function mockTakesHit() {
-  this.hits++;
-}
-
-function mockIsSunk() {
-  return this.hits >= this.size;
-}
-
-function mockGetSize() {
-  return this.size;
-}
-
-function mockGetHits() {
-  return this.hits;
-}
-
-jest.mock('Ships/Ship', () => {
-  return function Ship(size) {
-    this.size = size;
-    this.hits = 0;
-    this.takesHit = mockTakesHit;
-    this.isSunk = mockIsSunk;
-    this.getSize = mockGetSize;
-    this.getHits = mockGetHits;
-  };
-});
+import Ship from 'Root/__mocks__/MockShip';
 
 let ship;
 
