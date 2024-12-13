@@ -55,6 +55,7 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
     alias: {
       Ships: path.resolve(__dirname, 'src/model/ships/'),
+      Model: path.resolve(__dirname, 'src/model/'),
     },
   },
 };
