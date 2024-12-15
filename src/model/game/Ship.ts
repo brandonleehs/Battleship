@@ -1,4 +1,4 @@
-import Orientation from 'Ships/Orientation';
+import Orientation from 'Model/game/Orientation';
 
 export default class Ship {
   protected readonly size: number;

@@ -1,4 +1,4 @@
-import Ship from 'Root/__mocks__/MockShip';
+import Ship from 'Model/game/Ship';
 
 let ship;
 

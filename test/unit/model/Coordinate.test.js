@@ -1,4 +1,4 @@
-import Coordinate from 'Model/Coordinate';
+import Coordinate from 'Model/game/Coordinate';
 
 describe('(2, 1) is compared with (1, 2)', () => {
   test('equals() with (2, 1)', () => {

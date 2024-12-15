@@ -1,12 +1,14 @@
-import Ship from './ships/Ship';
+import Ship from './Ship';
 import Coordinate from './Coordinate';
-import Orientation from 'Ships/Orientation';
+import Orientation from 'Model/game/Orientation';
+import AttackStatus from 'Model/game/AttackStatus';
 
 // Note that the coordinate system is 0-indexed and is taken from the top-left
 export default class Gameboard {
   private readonly size: number;
+  private shipArr: Array<Ship> = [];
   private coordinateToShipMap: CoordinateToShipMap = {};
-  private coordinateSet = new Set<Coordinate>();
+  private coordinateToHitMap: CoordinateToHitMap = {};
 
   public constructor(size: number) {
     if (size > 26) {
@@ -31,10 +33,35 @@ export default class Gameboard {
       throw new Error('Ship collides with another ship');
     }
 
-    this.getShipCoordinateSet(ship, coordinate).forEach((shipCoordinate) =>
-      this.coordinateSet.add(shipCoordinate)
-    );
-    this.coordinateToShipMap[coordinate.toString()] = ship;
+    this.getShipCoordinateSet(ship, coordinate).forEach((shipCoordinate) => {
+      this.coordinateToShipMap[shipCoordinate.toString()] = ship;
+      this.coordinateToHitMap[shipCoordinate.toString()] = false;
+    });
+
+    this.shipArr.push(ship);
+  };
+
+  public receiveAttack = (coordinate: Coordinate): AttackStatus => {
+    let hit = false;
+    let sink = false;
+
+    if (coordinate.toString() in this.coordinateToHitMap) {
+      hit = true;
+      // If has not been hit
+      if (!this.coordinateToHitMap[coordinate.toString()]) {
+        this.coordinateToHitMap[coordinate.toString()] = true;
+        const ship = this.coordinateToShipMap[coordinate.toString()];
+        ship.takesHit();
+        if (ship.isSunk()) {
+          sink = true;
+        }
+      }
+    }
+    return { hit, sink, coordinate };
+  };
+
+  public allShipsSunk = (): boolean => {
+    return this.shipArr.every((ship) => ship.isSunk());
   };
 
   public getSize = (): number => {
@@ -45,8 +72,12 @@ export default class Gameboard {
     return this.coordinateToShipMap;
   };
 
-  public getCoordinateSet = (): Set<Coordinate> => {
-    return this.coordinateSet;
+  public getCoordinateToHitMap = (): CoordinateToHitMap => {
+    return this.coordinateToHitMap;
+  };
+
+  public getShipArr = (): Array<Ship> => {
+    return this.shipArr;
   };
 
   private isOOB = (ship: Ship, coordinate: Coordinate): boolean => {
@@ -54,15 +85,20 @@ export default class Gameboard {
   };
 
   private isSpace = (ship: Ship, coordinate: Coordinate): boolean => {
-    if (ship.getOrientation().valueOf() === Orientation.HORIZONTAL.valueOf()) {
-      if (coordinate.getX() + ship.getSize() > this.size) {
-        return false;
-      }
-    }
-
-    if (coordinate.getY() + ship.getSize() > this.size) {
+    if (
+      ship.getOrientation().valueOf() === Orientation.HORIZONTAL.valueOf() &&
+      coordinate.getX() + ship.getSize() > this.size
+    ) {
       return false;
     }
+
+    if (
+      ship.getOrientation().valueOf() === Orientation.VERTICAL.valueOf() &&
+      coordinate.getY() + ship.getSize() > this.size
+    ) {
+      return false;
+    }
+
     return true;
   };
 
@@ -73,7 +109,7 @@ export default class Gameboard {
     );
 
     for (const shipCoordinate of shipCoordinateArr) {
-      if (shipCoordinate.toString() in this.coordinateToShipMap) {
+      if (shipCoordinate.toString() in this.coordinateToHitMap) {
         return true;
       }
     }
@@ -86,7 +122,9 @@ export default class Gameboard {
   ): Set<Coordinate> => {
     const coordinateSet = new Set([coordinate]);
     for (let i = 1; i < ship.getSize(); i++) {
-      if (ship.getOrientation.valueOf() === Orientation.HORIZONTAL) {
+      if (
+        ship.getOrientation().valueOf() === Orientation.HORIZONTAL.valueOf()
+      ) {
         coordinateSet.add(
           new Coordinate(coordinate.getX() + i, coordinate.getY())
         );
@@ -102,4 +140,8 @@ export default class Gameboard {
 
 interface CoordinateToShipMap {
   [coordinate: string]: Ship;
+}
+
+interface CoordinateToHitMap {
+  [coordinate: string]: boolean;
 }
