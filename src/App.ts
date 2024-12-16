@@ -1,3 +1,5 @@
+import './assets/battleship.jpg';
+import './css/styles.css';
 import Home from './view/Home';
 
 class App {
