@@ -4,7 +4,7 @@ import Ship from 'Model/game/Ship';
 import SetupEvent from './SetupEvent';
 
 export default class SetupClickEvent extends SetupEvent {
-  public activate = (cell: HTMLDivElement): void => {
+  public activate = (cell: HTMLDivElement, player: number): void => {
     let gameboard = this.setupEventManager.getGameboard();
     let shipToBePlaced = this.setupEventManager.getShipToBePlaced();
     let shipSizes = this.setupEventManager.getShipSizes();
@@ -19,10 +19,14 @@ export default class SetupClickEvent extends SetupEvent {
         cell,
         shipToBePlaced
       );
+
+      let highlight = player === 1 ? 'highlight--blue' : 'highlight--red';
+      let active = player === 1 ? 'active--blue' : 'active--red';
+
       coordinateArr.forEach((coordinate) => {
         const cell = this.getCell(coordinate) as HTMLDivElement;
-        cell.classList.remove('highlight');
-        cell.classList.add('active');
+        cell.classList.remove(highlight);
+        cell.classList.add(active);
       });
 
       if (shipSizes.length > 0) {

@@ -19,8 +19,12 @@
     @apply [text-shadow:none] flex justify-center items-center outline outline-neutral-900 outline-[1px] w-[7vw] h-[7vw] max-h-[2rem] max-w-[2rem];
   }
 
-  .highlight {
-    @apply bg-[rgba(0,2,255,0.40)] animate-pulse;
+  .highlight--blue {
+    @apply bg-[rgba(0,0,255,0.40)] animate-pulse;
+  }
+
+  .highlight--red {
+    @apply bg-[rgba(255,0,0,0.40)] animate-pulse;
   }
 
   .body-mask {
@@ -59,9 +63,14 @@
   }
 }
 
-.active {
-  background-color: rgba(0, 2, 255, 0.4);
-  border: 2px solid rgb(0, 2, 255);
+.active--blue {
+  background-color: rgba(0, 0, 255, 0.4);
+  border: 2px solid rgb(0, 0, 255);
+}
+
+.active--red {
+  background-color: rgba(255, 0, 0, 0.4);
+  border: 2px solid rgb(255, 0, 0);
 }
 
 .jagged {

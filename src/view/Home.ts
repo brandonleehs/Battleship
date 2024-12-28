@@ -55,6 +55,9 @@ export default class Home extends View {
       setup.render();
     });
 
-    humanButton.addEventListener('click', (e: Event): void => {});
+    humanButton.addEventListener('click', (e: Event): void => {
+      const setup = new Setup({ boardSize, ai: false });
+      setup.render();
+    });
   };
 }

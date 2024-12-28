@@ -5,7 +5,7 @@ import Ship from 'Model/game/Ship';
 import ShipUtil from 'Model/game/ShipUtil';
 
 export default class SetupMouseoverEvent extends SetupEvent {
-  public highlight = (cell: HTMLDivElement): void => {
+  public highlight = (cell: HTMLDivElement, player: number): void => {
     let gameboard = this.setupEventManager.getGameboard();
     let shipToBePlaced = this.setupEventManager.getShipToBePlaced();
     try {
@@ -18,8 +18,10 @@ export default class SetupMouseoverEvent extends SetupEvent {
         cell,
         shipToBePlaced
       );
+      let highlight = player === 1 ? 'highlight--blue' : 'highlight--red';
+
       coordinateArr.forEach((coordinate) =>
-        (this.getCell(coordinate) as HTMLDivElement).classList.add('highlight')
+        (this.getCell(coordinate) as HTMLDivElement).classList.add(highlight)
       );
     } catch (e) {}
   };
