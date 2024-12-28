@@ -23,10 +23,6 @@
     @apply bg-[rgba(0,2,255,0.40)] animate-pulse;
   }
 
-  /* .body-mask {
-    @apply [border-image:linear-gradient(to_right,rgba(89,20,19,0.25),rgb(10,49,92,0.25))_fill_1];
-  } */
-
   .body-mask {
     @apply [border-image:linear-gradient(to_right,rgba(185,43,39,0.25),rgba(21,101,192,0.25))_fill_1];
   }
@@ -36,9 +32,55 @@
   }
 }
 
+.fade-in-out {
+  animation: fadeIn 0.5s ease-in-out, fadeOut 0.5s linear;
+  animation-delay: 0s, 2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 .active {
   background-color: rgba(0, 2, 255, 0.4);
   border: 2px solid rgb(0, 2, 255);
+}
+
+.jagged {
+  clip-path: polygon(
+    0% 0%,
+    10% 15%,
+    0% 30%,
+    10% 45%,
+    0% 60%,
+    10% 75%,
+    0% 100%,
+    100% 100%,
+    90% 75%,
+    100% 60%,
+    90% 45%,
+    100% 30%,
+    90% 15%,
+    100% 0%
+  );
 }
 
 @font-face {

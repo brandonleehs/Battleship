@@ -44,7 +44,9 @@ export default class Setup extends View {
     } text-xs outline outline-neutral-900 outline-[2px]">${cells}</section>`;
 
     body.innerHTML = `
+    <p class="fade-in-out font-bold [text-shadow:none] text-center bg-blue-200 text-blue-700 absolute top-3 px-8 py-2 rounded-md shadow-md text-sm">Place your ships!</p>
     <main class="grid place-items-center gap-4 bg-neutral-200 p-4 rounded-lg max-w-[398px] text-neutral-900">
+    <p class="[text-shadow:none] font-bold text-lg bg-gray-400 w-full text-center jagged py-1">Player 1</p>
     ${boardView}
     <section class="w-full grid grid-cols-2 grid-rows-2 gap-4 [&_button]:font-bold [&_button]:border-solid [&_button]:border-neutral-900 [&_button]:border-[2px] [&_button]:rounded-md [&_button]:px-5 [&_button]:py-1">
     <button type="button" class="rotate">Rotate</button>
