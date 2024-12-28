@@ -1,11 +1,11 @@
 import Orientation from 'Model/game/Orientation';
 
 export default class Ship {
-  protected readonly size: number;
-  protected hits = 0;
-  protected orientation: Orientation;
+  private readonly size: number;
+  private hits = 0;
+  private orientation: Orientation;
 
-  protected constructor(size: number, orientation: Orientation) {
+  public constructor(size: number, orientation: Orientation) {
     this.size = size;
     this.orientation = orientation;
   }

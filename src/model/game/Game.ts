@@ -1,6 +1,6 @@
 import Player from 'Model/player/Player';
 
-class Game {
+export default class Game {
   readonly player1: Player;
   readonly player2: Player;
   turn: Turn;

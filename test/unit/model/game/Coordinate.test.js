@@ -60,3 +60,11 @@ describe('Coordinate of (26, 26)', () => {
     );
   });
 });
+
+describe('Coordinate of G2', () => {
+  test('fromString()', () => {
+    expect(
+      Coordinate.fromString('G2').equals(new Coordinate(6, 1))
+    ).toBeTruthy();
+  });
+});

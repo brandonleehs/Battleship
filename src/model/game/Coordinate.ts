@@ -20,6 +20,14 @@ export default class Coordinate {
     return asciiUppercase.charAt(this.x) + (this.y + 1).toString();
   };
 
+  public static fromString = (coordinate: string): Coordinate => {
+    let asciiUppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    return new Coordinate(
+      asciiUppercase.indexOf(coordinate[0]),
+      parseInt(coordinate[1]) - 1
+    );
+  };
+
   public getX = (): number => {
     return this.x;
   };

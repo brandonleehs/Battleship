@@ -2,6 +2,7 @@ import Ship from './Ship';
 import Coordinate from './Coordinate';
 import Orientation from 'Model/game/Orientation';
 import AttackStatus from 'Model/game/AttackStatus';
+import ShipUtil from './ShipUtil';
 
 // Note that the coordinate system is 0-indexed and is taken from the top-left
 export default class Gameboard {
@@ -18,7 +19,54 @@ export default class Gameboard {
     this.size = size;
   }
 
-  public addShip = (ship: Ship, coordinate: Coordinate): void => {
+  public randomise = (): void => {
+    // Clear gameboard
+    this.shipArr = [];
+    this.coordinateToHitMap = {};
+    this.coordinateToShipMap = {};
+
+    const coordinateArr: Coordinate[] = [];
+
+    for (let x = 0; x < this.size; x++) {
+      for (let y = 0; y < this.size; y++) {
+        coordinateArr.push(new Coordinate(x, y));
+      }
+    }
+
+    const shipSizes = [5, 4, 3, 3, 2];
+    for (const shipSize of shipSizes) {
+      let done = false;
+      while (!done) {
+        const orientation =
+          Math.round(Math.random()) === 0
+            ? Orientation.VERTICAL
+            : Orientation.HORIZONTAL;
+        const ship = new Ship(shipSize, orientation);
+
+        const coordinate =
+          coordinateArr[Math.floor(Math.random() * coordinateArr.length)];
+
+        try {
+          this.addShip(ship, coordinate);
+          // Remove ship coordinates from coordinateArr
+          for (const shipCoordinate of Array.from(
+            ShipUtil.getShipCoordinateSet(ship, coordinate)
+          )) {
+            // Only splice array if item is found
+            const index = coordinateArr.indexOf(coordinate);
+            if (index > -1) {
+              coordinateArr.splice(index, 1);
+            }
+          }
+          done = true;
+        } catch (e) {
+          // continue
+        }
+      }
+    }
+  };
+
+  public checkShipPlacement = (ship: Ship, coordinate: Coordinate): void => {
     if (this.isOOB(ship, coordinate)) {
       throw new Error('Head coordinate is out of bounds!');
     }
@@ -32,11 +80,17 @@ export default class Gameboard {
     if (this.collides(ship, coordinate)) {
       throw new Error('Ship collides with another ship');
     }
+  };
 
-    this.getShipCoordinateSet(ship, coordinate).forEach((shipCoordinate) => {
-      this.coordinateToShipMap[shipCoordinate.toString()] = ship;
-      this.coordinateToHitMap[shipCoordinate.toString()] = false;
-    });
+  public addShip = (ship: Ship, coordinate: Coordinate): void => {
+    this.checkShipPlacement(ship, coordinate);
+
+    ShipUtil.getShipCoordinateSet(ship, coordinate).forEach(
+      (shipCoordinate) => {
+        this.coordinateToShipMap[shipCoordinate.toString()] = ship;
+        this.coordinateToHitMap[shipCoordinate.toString()] = false;
+      }
+    );
 
     this.shipArr.push(ship);
   };
@@ -105,7 +159,7 @@ export default class Gameboard {
   private collides = (ship: Ship, coordinate: Coordinate): boolean => {
     // Apparently Set has no intersection method yet
     const shipCoordinateArr = Array.from(
-      this.getShipCoordinateSet(ship, coordinate)
+      ShipUtil.getShipCoordinateSet(ship, coordinate)
     );
 
     for (const shipCoordinate of shipCoordinateArr) {
@@ -114,27 +168,6 @@ export default class Gameboard {
       }
     }
     return false;
-  };
-
-  private getShipCoordinateSet = (
-    ship: Ship,
-    coordinate: Coordinate
-  ): Set<Coordinate> => {
-    const coordinateSet = new Set([coordinate]);
-    for (let i = 1; i < ship.getSize(); i++) {
-      if (
-        ship.getOrientation().valueOf() === Orientation.HORIZONTAL.valueOf()
-      ) {
-        coordinateSet.add(
-          new Coordinate(coordinate.getX() + i, coordinate.getY())
-        );
-      } else {
-        coordinateSet.add(
-          new Coordinate(coordinate.getX(), coordinate.getY() + i)
-        );
-      }
-    }
-    return coordinateSet;
   };
 }
 

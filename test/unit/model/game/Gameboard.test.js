@@ -266,4 +266,13 @@ describe('Ship of size 4, Gameboard of size 10', () => {
       expect(gameboard.allShipsSunk()).toBeFalsy();
     });
   });
+
+  test('randomise() is called', () => {
+    gameboard = new Gameboard(10);
+    gameboard.randomise();
+
+    expect(gameboard.getShipArr().length != 0).toBeTruthy();
+    expect(gameboard.getCoordinateToShipMap().size != 0).toBeTruthy();
+    expect(gameboard.getCoordinateToHitMap().size != 0).toBeTruthy();
+  });
 });
