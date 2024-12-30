@@ -23,7 +23,7 @@ export default class Home extends View {
 
     const body = document.querySelector('body') as HTMLBodyElement;
     body.className =
-      'grid place-items-center relative font-inter text-neutral-50 bg-battleship w-screen h-screen bg-cover py-10 px-5 text-shadow body-mask';
+      'overflow-hidden grid place-items-center relative font-inter text-neutral-50 bg-battleship bg-cover py-10 px-4 text-shadow body-mask';
     body.innerHTML = `
     <h1 class="text-5xl lg:text-7xl text-center">Battleship</h1>
     <main>

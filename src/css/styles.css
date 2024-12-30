@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  height: 100%;
+}
+
 @layer components {
   .outline-button {
     @apply font-bold transition-all ease-in-out relative hover:bottom-0.5 hover:shadow-[0_0_5px_#e4807d,_0_0_25px] max-w-28 w-full border-2 border-solid rounded-md py-2 px-4;

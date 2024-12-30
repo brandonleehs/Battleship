@@ -33,7 +33,7 @@ export default class Play extends View {
     }
 
     body.innerHTML = `
-    <p class="fade-in-out font-bold [text-shadow:none] text-center ${alertColor} absolute top-3 px-8 py-2 rounded-md shadow-md text-sm">Scroll/Swipe/Click to attack</p>
+    <p class="fade-in-out font-bold [text-shadow:none] text-center ${alertColor} absolute top-3 px-8 py-2 rounded-md shadow-md text-sm">Scroll/Swipe/Click to switch boards</p>
     <main class="grid place-items-center gap-1 lg:gap-2 bg-neutral-200 p-4 rounded-lg text-neutral-900">
     <p class="[text-shadow:none] font-bold text-lg md:text-xl bg-gray-400 w-full text-center jagged py-1">${playerDisplay}</p>
     <p class="[text-shadow:none] font-semibold text-center md:text-lg board-label">Your board</p>
