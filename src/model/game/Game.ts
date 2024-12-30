@@ -1,4 +1,5 @@
 import Player from 'Model/player/Player';
+import Turn from './Turn';
 
 export default class Game {
   private player1: Player;
@@ -24,9 +25,4 @@ export default class Game {
   public getTurn = (): Turn => {
     return this.turn;
   };
-}
-
-enum Turn {
-  PLAYER_1,
-  PLAYER_2,
 }

@@ -29,7 +29,7 @@ export default class Home extends View {
     <main>
     <form class="grid p-5 md:p-12">
     <p class="text-center text-lg xs:text-2xl lg:text-4xl">Choose your opponent</p>
-    <div class="grid grid-cols-2 justify-items-center gap-5 lg:gap-10 mt-6">
+    <div class="grid grid-cols-2 justify-items-center gap-5 mt-6">
     ${aiIcon}
     ${humanIcon}
     <p class="text-center text-md sm:text-xl lg:text-2xl">Challenge the AI Admiral</p>

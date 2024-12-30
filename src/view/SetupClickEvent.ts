@@ -12,6 +12,7 @@ export default class SetupClickEvent extends SetupEvent {
     if (shipToBePlaced === null) {
       return;
     }
+
     try {
       gameboard.addShip(shipToBePlaced, this.getCoordinate(cell));
 

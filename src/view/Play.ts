@@ -1,6 +1,9 @@
 import Player from 'Model/player/Player';
 import View from './View';
 import Game from 'Model/game/Game';
+import Coordinate from 'Model/game/Coordinate';
+import Turn from 'Model/game/Turn';
+import Ring from 'Model/game/Ring';
 
 export default class Play extends View {
   private game: Game;
@@ -38,9 +41,10 @@ export default class Play extends View {
     <p class="[text-shadow:none] font-bold text-lg md:text-xl bg-gray-400 w-full text-center jagged py-1">${playerDisplay}</p>
     <p class="[text-shadow:none] font-semibold text-center md:text-lg board-label">Your board</p>
     <div class="grid gap-2">
-    <section class="playView overflow-scroll flex items-center">
+    <section class="relative playView overflow-scroll flex items-center">
     ${this.getBoardView(player)}
     ${this.getBoardView(otherPlayer)}
+    <canvas class="absolute h-full left-0 top-0 [pointer-events:none]"></canvas>
     </section>
     <div class="flex justify-center items-center gap-2">
     <a class="scroll-button scroll-button--active scroll-button-primary" id="scroll-button-${player}"></a>
@@ -55,6 +59,8 @@ export default class Play extends View {
     (
       document.querySelector(`#board-${otherPlayer}`) as HTMLElement
     ).classList.add('secondary-board');
+
+    this.paintBoard();
   };
 
   private bindEvents = (): void => {
@@ -127,6 +133,63 @@ export default class Play extends View {
         boardLabel.innerText = 'Your board';
       }
     });
+
+    const cellList: NodeListOf<HTMLDivElement> = document.querySelectorAll(
+      '.secondary-board .cell'
+    );
+
+    for (let i = 0; i < cellList.length; i++) {
+      const cell = cellList[i];
+      cell.addEventListener('click', (e: Event) => {
+        const size =
+          cell.getBoundingClientRect().right -
+          cell.getBoundingClientRect().left;
+
+        const centerCoordinate = [
+          cell.offsetLeft + size / 2,
+          cell.offsetTop + size / 2,
+        ];
+
+        const canvasCoordinate = this.getCanvasCoordinate(
+          centerCoordinate[0],
+          centerCoordinate[1]
+        );
+
+        const ring = new Ring(canvasCoordinate[0], canvasCoordinate[1]);
+        ring.ripple();
+      });
+    }
+  };
+
+  private getCanvasCoordinate = (x: number, y: number): [number, number] => {
+    const playView = document.querySelector('.playView') as HTMLElement;
+    return [
+      (x / playView.offsetWidth / 2) * 300,
+      (y / playView.offsetHeight) * 150,
+    ];
+  };
+
+  private paintBoard = (): void => {
+    let player: Player;
+    let active: string;
+
+    if (this.game.getTurn() === Turn.PLAYER_1) {
+      player = this.game.getPlayer1();
+      active = 'active--blue';
+    } else {
+      player = this.game.getPlayer2();
+      active = 'active--red';
+    }
+
+    const coordinateToShipMap = player.getGameboard().getCoordinateToShipMap();
+    for (const coordinateString in coordinateToShipMap) {
+      const coordinate = Coordinate.fromString(coordinateString);
+      const cell = document.querySelector(
+        `[data-x-coordinate="${coordinate.getX()}"][data-y-coordinate="${coordinate.getY()}"]`
+      ) as HTMLDivElement;
+
+      cell.classList.add(active);
+    }
   };
 
   private getBoardView = (player: number): string => {

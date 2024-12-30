@@ -25,7 +25,7 @@ body {
     --max-cell-size: 1.5rem;
     --sm-max-cell-size: 1.6rem;
     --md-max-cell-size: 1.7rem;
-    --lg-max-cell-size: 2rem;
+    --lg-max-cell-size: 1.8rem;
 
     scroll-snap-align: center;
 
@@ -42,7 +42,7 @@ body {
     --max-size: calc(1.5rem * 11 + var(--padding) * 2);
     --sm-max-size: calc(1.6rem * 11 + var(--padding) * 2);
     --md-max-size: calc(1.7rem * 11 + var(--padding) * 2);
-    --lg-max-size: calc(2rem * 11 + var(--padding) * 2);
+    --lg-max-size: calc(1.8rem * 11 + var(--padding) * 2);
 
     @apply p-[var(--padding)] w-[var(--size)] h-[var(--size)] max-h-[var(--max-size)] max-w-[var(--max-size)] sm:max-h-[var(--sm-max-size)] sm:max-w-[var(--sm-max-size)] md:max-h-[var(--md-max-size)] md:max-w-[var(--md-max-size)] lg:max-h-[var(--lg-max-size)] lg:max-w-[var(--lg-max-size)];
 
