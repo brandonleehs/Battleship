@@ -2,6 +2,7 @@ import SetupEvent from './SetupEvent';
 import Player from 'Model/player/Player';
 import SetupEventManager from './SetupEventManager';
 import Setup from './Setup';
+import Play from './Play';
 
 export default class SetupReadyButton extends SetupEvent {
   private setup: Setup;
@@ -19,18 +20,23 @@ export default class SetupReadyButton extends SetupEvent {
     }
 
     const player1 = new Player(this.setupEventManager.getBoardSize());
+    const player2 = new Player(this.setupEventManager.getBoardSize());
+
     player1.setGameboard(this.setupEventManager.getGameboard());
 
     if (this.setup.getPlayer() === 1 && this.setup.getAi()) {
-      const player2 = new Player(this.setupEventManager.getBoardSize());
       player2.getGameboard().randomise();
+
+      const play = new Play(player1, player2);
+      play.render();
     } else if (this.setup.getPlayer() === 1 && !this.setup.getAi()) {
       this.setup.setPlayer(2);
       this.setup.render();
     } else {
-      const player2 = new Player(this.setupEventManager.getBoardSize());
       player2.setGameboard(this.setupEventManager.getGameboard());
+
+      const play = new Play(player1, player2);
+      play.render();
     }
-    // render game page
   };
 }

@@ -15,8 +15,50 @@
     @apply outline-button text-blue-400 hover:text-neutral-50 hover:bg-blue-400 border-[#6ca9ef];
   }
 
+  .boardView {
+    --cell-size: 7vw;
+    --max-cell-size: 1.5rem;
+    --sm-max-cell-size: 1.6rem;
+    --md-max-cell-size: 1.7rem;
+    --lg-max-cell-size: 2rem;
+
+    scroll-snap-align: center;
+
+    @apply first:mr-[calc(var(--padding)*2)];
+  }
+
   .cell {
-    @apply [text-shadow:none] flex justify-center items-center outline outline-neutral-900 outline-[1px] w-[7vw] h-[7vw] max-h-[2rem] max-w-[2rem];
+    @apply [text-shadow:none] flex justify-center items-center outline outline-neutral-900 outline-[1px] w-[var(--cell-size)] h-[var(--cell-size)] max-h-[var(--max-cell-size)] max-w-[var(--max-cell-size)] sm:max-h-[var(--sm-max-cell-size)] sm:max-w-[var(--sm-max-cell-size)] md:max-h-[var(--md-max-cell-size)] md:max-w-[var(--md-max-cell-size)] lg:max-h-[var(--lg-max-cell-size)] lg:max-w-[var(--lg-max-cell-size)];
+  }
+
+  .playView {
+    --padding: 0.25rem;
+    --size: calc(7vw * 11 + var(--padding) * 2);
+    --max-size: calc(1.5rem * 11 + var(--padding) * 2);
+    --sm-max-size: calc(1.6rem * 11 + var(--padding) * 2);
+    --md-max-size: calc(1.7rem * 11 + var(--padding) * 2);
+    --lg-max-size: calc(2rem * 11 + var(--padding) * 2);
+
+    @apply p-[var(--padding)] w-[var(--size)] h-[var(--size)] max-h-[var(--max-size)] max-w-[var(--max-size)] sm:max-h-[var(--sm-max-size)] sm:max-w-[var(--sm-max-size)] md:max-h-[var(--md-max-size)] md:max-w-[var(--md-max-size)] lg:max-h-[var(--lg-max-size)] lg:max-w-[var(--lg-max-size)];
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+  }
+
+  .scroll-button {
+    cursor: pointer;
+
+    @apply rounded-full size-2 bg-gray-400;
+  }
+
+  .scroll-button--active {
+    @apply bg-black;
+  }
+
+  .playView::-webkit-scrollbar {
+    display: none;
   }
 
   .highlight--blue {
@@ -38,7 +80,7 @@
 
 .fade-in-out {
   animation: fadeIn 0.5s ease-in-out, fadeOut 0.5s linear;
-  animation-delay: 0s, 2s;
+  animation-delay: 0s, 4s;
   animation-fill-mode: forwards;
   animation-iteration-count: 1;
 }

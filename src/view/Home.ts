@@ -25,17 +25,17 @@ export default class Home extends View {
     body.className =
       'grid place-items-center relative font-inter text-neutral-50 bg-battleship w-screen h-screen bg-cover py-10 px-5 text-shadow body-mask';
     body.innerHTML = `
-    <h1 class="text-5xl md:text-7xl text-center">Battleship</h1>
+    <h1 class="text-5xl lg:text-7xl text-center">Battleship</h1>
     <main>
     <form class="grid p-5 md:p-12">
-    <p class="text-center text-lg xs:text-2xl md:text-3xl lg:text-4xl">Choose your opponent</p>
-    <div class="grid grid-cols-2 justify-items-center gap-5 md:gap-10 mt-6">
+    <p class="text-center text-lg xs:text-2xl lg:text-4xl">Choose your opponent</p>
+    <div class="grid grid-cols-2 justify-items-center gap-5 lg:gap-10 mt-6">
     ${aiIcon}
     ${humanIcon}
-    <p class="text-center text-md sm:text-xl md:text-2xl">Challenge the AI Admiral</p>
-    <p class="text-center text-md sm:text-xl md:text-2xl">Face a Human Opponent</p>
-    <p class="text-center text-sm sm:text-base md:text-lg">Test your strategic brilliance against a cunning AI opponent.</p>
-    <p class="text-center text-sm sm:text-base md:text-lg">Engage in an epic naval battle with a friend.</p>
+    <p class="text-center text-md sm:text-xl lg:text-2xl">Challenge the AI Admiral</p>
+    <p class="text-center text-md sm:text-xl lg:text-2xl">Face a Human Opponent</p>
+    <p class="text-center text-sm sm:text-base lg:text-lg">Test your strategic brilliance against a cunning AI opponent.</p>
+    <p class="text-center text-sm sm:text-base lg:text-lg">Engage in an epic naval battle with a friend.</p>
     <button type="button" class="ai-button outline-button--red">AI</button>
     <button type="button" class="human-button outline-button--blue">Human</button>
     </div>

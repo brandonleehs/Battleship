@@ -1,9 +1,9 @@
 import Player from 'Model/player/Player';
 
 export default class Game {
-  readonly player1: Player;
-  readonly player2: Player;
-  turn: Turn;
+  private player1: Player;
+  private player2: Player;
+  private turn: Turn;
 
   constructor(player1: Player, player2: Player) {
     this.player1 = player1;
@@ -12,6 +12,18 @@ export default class Game {
   }
 
   public start = (): void => {};
+
+  public getPlayer1 = (): Player => {
+    return this.player1;
+  };
+
+  public getPlayer2 = (): Player => {
+    return this.player2;
+  };
+
+  public getTurn = (): Turn => {
+    return this.turn;
+  };
 }
 
 enum Turn {
