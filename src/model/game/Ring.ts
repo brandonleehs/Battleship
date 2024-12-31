@@ -3,7 +3,7 @@ export default class Ring {
   private ctx: CanvasRenderingContext2D;
   private CANVAS_WIDTH = 300;
   private CANVAS_HEIGHT = 150;
-  private velocity = 1;
+  private velocity = 0.5;
   private radius = 0;
   private x: number;
   private y: number;
@@ -14,23 +14,94 @@ export default class Ring {
     this.x = x;
     this.y = y;
 
-    this.ctx.strokeStyle = 'red';
+    this.ctx.strokeStyle = 'rgb(249,182,78)';
     this.ctx.lineWidth = 2;
     this.clearCanvas();
   }
 
-  public ripple = (): void => {
-    // clearCanvas must be in front for some reason
-    this.clearCanvas();
+  public test = (): void => {
+    const colorArr = [
+      'rgb(255,247,93)',
+      'rgb(255,193,31)',
+      'rgb(254,101,13)',
+      'rgb(243,60,4)',
+      'rgb(218,31,5)',
+      'rgb(161,1,0)',
+    ];
 
-    if (this.radius === 30) {
+    this.radius = 5;
+    this.draw();
+    this.ctx.fillStyle = colorArr[0];
+    this.ctx.fill();
+
+    this.ctx.lineWidth = 2;
+
+    for (let i = 0; i < colorArr.length; i++) {
+      const color = colorArr[i];
+
+      this.radius += this.velocity;
+      this.ctx.strokeStyle = color;
+      this.draw();
+    }
+  };
+
+  public ripple = (): void => {
+    if (this.radius >= 10) {
+      this.clearCanvas();
       return;
     }
-    this.radius += this.velocity;
-    this.draw();
+
+    // Explosion color palette
+    const colorArr = [
+      'rgb(255,247,93)',
+      'rgb(255,193,31)',
+      'rgb(254,101,13)',
+      'rgb(243,60,4)',
+      'rgb(218,31,5)',
+      'rgb(161,1,0)',
+    ];
+
+    if (this.radius <= 5) {
+      this.ctx.fillStyle = colorArr[0];
+      this.ctx.strokeStyle = colorArr[0];
+      this.draw();
+      this.ctx.fill();
+      this.radius += this.velocity;
+      this.ctx.save();
+    } else {
+      this.ctx.restore();
+      this.ctx.lineWidth = 2;
+      this.velocity = 0.05;
+      for (const color of colorArr) {
+        this.ctx.strokeStyle = color;
+        this.draw();
+        this.radius += this.velocity;
+      }
+    }
 
     window.requestAnimationFrame(this.ripple);
   };
+
+  // private smoke = (flag: number): void => {
+  // const colorArr = [
+  //   'rgb(203,53,61)',
+  //   'rgb(249,182,78)',
+  //   'rgb(237,98,64)',
+  //   'rgb(86,61,67)',
+  //   'rgb(106,74,87)',
+  // ];
+  //   if (flag >= 30) return;
+
+  //   if (flag < 10) {
+  //     this.ctx.fillStyle = 'rgb(106,74,87)';
+  //     this.ctx.fill();
+  //   } else if (flag < 20) {
+  //     this.ctx.fillStyle = 'rgb(86,61,67)';
+  //     this.ctx.fill();
+  //   }
+  //   flag++;
+  //   window.requestAnimationFrame(() => this.smoke(flag));
+  // };
 
   private draw = () => {
     this.ctx.beginPath();

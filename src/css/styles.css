@@ -110,6 +110,56 @@ body {
   }
 }
 
+.target {
+  /* A neat method for getting corner borders */
+  /* https://stackoverflow.com/questions/14387690/how-can-i-show-only-corner-borders */
+
+  --b: 2px; /* thickness of the border */
+  --c: black; /* color of the border */
+  --w: 7px; /* width of border */
+
+  border: var(--b) solid #0000; /* space for the border */
+  --_g: #0000 90deg, var(--c) 0;
+  --_p: var(--w) var(--w) border-box no-repeat;
+  background: conic-gradient(
+        from 90deg at top var(--b) left var(--b),
+        var(--_g)
+      )
+      0 0 / var(--_p),
+    conic-gradient(from 180deg at top var(--b) right var(--b), var(--_g)) 100% 0 /
+      var(--_p),
+    conic-gradient(from 0deg at bottom var(--b) left var(--b), var(--_g)) 0 100% /
+      var(--_p),
+    conic-gradient(from -90deg at bottom var(--b) right var(--b), var(--_g))
+      100% 100% / var(--_p);
+}
+
+.target--red {
+  --c: #dc2626;
+}
+
+.target--blue {
+  --c: #2563eb;
+}
+
+.hit {
+  --bg-color: gray;
+
+  background-color: var(--bg-color);
+}
+
+.hit--red {
+  --bg-clr: #dc2626;
+}
+
+.hit--blue {
+  --bg-clr: #2563eb;
+}
+
+.miss {
+  background-color: #9ca3af;
+}
+
 .active--blue {
   background-color: rgba(0, 0, 255, 0.4);
   border: 2px solid rgb(0, 0, 255);

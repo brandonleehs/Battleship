@@ -158,6 +158,26 @@ export default class Play extends View {
         const ring = new Ring(canvasCoordinate[0], canvasCoordinate[1]);
         ring.ripple();
       });
+
+      let target = '';
+
+      if (
+        (
+          document.querySelector('#scroll-button-1') as HTMLAnchorElement
+        ).classList.contains('scroll-button-primary')
+      ) {
+        target = 'target--red';
+      } else {
+        target = 'target--blue';
+      }
+
+      cell.addEventListener('mouseover', (e: Event): void => {
+        cell.classList.add('target', target);
+      });
+
+      cell.addEventListener('mouseout', (e: Event): void => {
+        cell.classList.remove('target', target);
+      });
     }
   };
 
