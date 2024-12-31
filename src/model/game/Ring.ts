@@ -19,32 +19,6 @@ export default class Ring {
     this.clearCanvas();
   }
 
-  public test = (): void => {
-    const colorArr = [
-      'rgb(255,247,93)',
-      'rgb(255,193,31)',
-      'rgb(254,101,13)',
-      'rgb(243,60,4)',
-      'rgb(218,31,5)',
-      'rgb(161,1,0)',
-    ];
-
-    this.radius = 5;
-    this.draw();
-    this.ctx.fillStyle = colorArr[0];
-    this.ctx.fill();
-
-    this.ctx.lineWidth = 2;
-
-    for (let i = 0; i < colorArr.length; i++) {
-      const color = colorArr[i];
-
-      this.radius += this.velocity;
-      this.ctx.strokeStyle = color;
-      this.draw();
-    }
-  };
-
   public ripple = (): void => {
     if (this.radius >= 10) {
       this.clearCanvas();

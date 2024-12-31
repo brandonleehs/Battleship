@@ -143,21 +143,30 @@ body {
 }
 
 .hit {
-  --bg-color: gray;
+  --bg-clr: transparent;
+  --outline: transparent;
 
-  background-color: var(--bg-color);
+  background-color: var(--bg-clr);
+  outline: var(--outline);
 }
 
 .hit--red {
-  --bg-clr: #dc2626;
+  --bg-clr: rgba(225, 29, 72, 0.5);
+  --outline: 2px solid rgba(225, 29, 72, 1);
 }
 
 .hit--blue {
-  --bg-clr: #2563eb;
+  --bg-clr: rgba(37, 99, 235, 0.5);
+  --outline: rgba(37, 99, 235, 1);
 }
 
 .miss {
   background-color: #9ca3af;
+}
+
+.destroyed {
+  background-color: #111827;
+  border: 0;
 }
 
 .active--blue {

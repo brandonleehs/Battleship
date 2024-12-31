@@ -197,7 +197,7 @@ describe('Ship of size 4, Gameboard of size 10', () => {
         new Coordinate(0, 0)
       );
 
-      expect(hit).toBeTruthy();
+      expect(hit).toBeFalsy();
       expect(sink).toBeFalsy();
       expect(coordinate.equals(new Coordinate(0, 0))).toBeTruthy();
 
@@ -219,7 +219,7 @@ describe('Ship of size 4, Gameboard of size 10', () => {
         new Coordinate(0, 3)
       );
 
-      expect(hit).toBeTruthy();
+      expect(hit).toBeFalsy();
       expect(sink).toBeFalsy();
       expect(coordinate.equals(new Coordinate(0, 3))).toBeTruthy();
 

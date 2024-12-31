@@ -26,6 +26,7 @@ export default class SetupReadyButton extends SetupEvent {
 
     if (this.setup.getPlayer() === 1 && this.setup.getAi()) {
       player2.getGameboard().randomise();
+      player2.setAi(true);
 
       const play = new Play(player1, player2);
       play.render();

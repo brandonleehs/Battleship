@@ -99,16 +99,17 @@ export default class Gameboard {
     let hit = false;
     let sink = false;
 
-    if (coordinate.toString() in this.coordinateToHitMap) {
+    // If has not been hit
+    if (
+      coordinate.toString() in this.coordinateToHitMap &&
+      !this.coordinateToHitMap[coordinate.toString()]
+    ) {
       hit = true;
-      // If has not been hit
-      if (!this.coordinateToHitMap[coordinate.toString()]) {
-        this.coordinateToHitMap[coordinate.toString()] = true;
-        const ship = this.coordinateToShipMap[coordinate.toString()];
-        ship.takesHit();
-        if (ship.isSunk()) {
-          sink = true;
-        }
+      this.coordinateToHitMap[coordinate.toString()] = true;
+      const ship = this.coordinateToShipMap[coordinate.toString()];
+      ship.takesHit();
+      if (ship.isSunk()) {
+        sink = true;
       }
     }
     return { hit, sink, coordinate };

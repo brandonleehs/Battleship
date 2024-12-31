@@ -25,4 +25,15 @@ export default class Game {
   public getTurn = (): Turn => {
     return this.turn;
   };
+
+  public setTurn = (turn: Turn): void => {
+    this.turn = turn;
+  };
+
+  public isOver = (): boolean => {
+    return (
+      this.player1.getGameboard().allShipsSunk() ||
+      this.player2.getGameboard().allShipsSunk()
+    );
+  };
 }
