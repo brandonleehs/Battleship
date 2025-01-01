@@ -10,15 +10,15 @@ import Home from './Home';
 export default class Play extends View {
   private game: Game;
   private flag = 0; // Used to prevent rapid firing
-  target = false;
-  directions: Direction[] = [
+  private target = false;
+  private directions: Direction[] = [
     Direction.NORTH,
     Direction.SOUTH,
     Direction.EAST,
     Direction.WEST,
   ];
-  lastCoordinate: Coordinate | null = null;
-  originalCoordinate: Coordinate | null = null;
+  private lastCoordinate: Coordinate | null = null;
+  private originalCoordinate: Coordinate | null = null;
 
   public constructor(player1: Player, player2: Player) {
     super();
@@ -105,30 +105,36 @@ export default class Play extends View {
       '#gameover-dialog'
     ) as HTMLDialogElement;
 
+    const primaryScrollButton = document.querySelector(
+      '.scroll-button-primary'
+    ) as HTMLAnchorElement;
+    const secondaryScrollButton = document.querySelector(
+      '.scroll-button-secondary'
+    ) as HTMLAnchorElement;
+
+    playView.addEventListener('scroll', (e: WheelEvent): void => {
+      if (playView.scrollLeft > 127) {
+        primaryScrollButton.classList.remove('scroll-button--active');
+        secondaryScrollButton.classList.add('scroll-button--active');
+        boardLabel.innerText = 'Enemy board';
+      } else {
+        primaryScrollButton.classList.add('scroll-button--active');
+        secondaryScrollButton.classList.remove('scroll-button--active');
+        boardLabel.innerText = 'Your board';
+      }
+    });
+
     playView.addEventListener('wheel', (e: WheelEvent): void => {
       e.preventDefault();
-      const primaryScrollButton = document.querySelector(
-        '.scroll-button-primary'
-      ) as HTMLAnchorElement;
-      const secondaryScrollButton = document.querySelector(
-        '.scroll-button-secondary'
-      ) as HTMLAnchorElement;
-
       if (
         e.deltaY > 0 &&
         primaryScrollButton.classList.contains('scroll-button--active')
       ) {
-        primaryScrollButton.classList.toggle('scroll-button--active');
-        secondaryScrollButton.classList.toggle('scroll-button--active');
-        boardLabel.innerText = 'Enemy board';
         playView.scrollLeft += 300;
       } else if (
         e.deltaY < 0 &&
         !primaryScrollButton.classList.contains('scroll-button--active')
       ) {
-        primaryScrollButton.classList.toggle('scroll-button--active');
-        secondaryScrollButton.classList.toggle('scroll-button--active');
-        boardLabel.innerText = 'Your board';
         playView.scrollLeft -= 300;
       }
     });
