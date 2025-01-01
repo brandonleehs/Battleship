@@ -10,6 +10,15 @@ import Home from './Home';
 export default class Play extends View {
   private game: Game;
   private flag = 0; // Used to prevent rapid firing
+  target = false;
+  directions: Direction[] = [
+    Direction.NORTH,
+    Direction.SOUTH,
+    Direction.EAST,
+    Direction.WEST,
+  ];
+  lastCoordinate: Coordinate | null = null;
+  originalCoordinate: Coordinate | null = null;
 
   public constructor(player1: Player, player2: Player) {
     super();
@@ -260,8 +269,7 @@ export default class Play extends View {
             ) as HTMLAnchorElement;
             scrollButtonPrimary.click();
             await sleep(500);
-            this.randomAttack();
-            await sleep(1000);
+            await this.randomAttack();
             scrollButtonSecondary.click();
           } else {
             await sleep(1000);
@@ -421,19 +429,99 @@ export default class Play extends View {
       sink = false;
     const ai = this.game.getPlayer2();
     const body = document.querySelector('body') as HTMLBodyElement;
+
     do {
-      const x = Math.floor(
-        Math.random() * this.game.getPlayer1().getGameboard().getSize()
-      );
-      const y = Math.floor(
-        Math.random() * this.game.getPlayer1().getGameboard().getSize()
-      );
-      const coordinate = new Coordinate(x, y);
+      let coordinate: Coordinate | null = null;
+      if (this.target && this.lastCoordinate) {
+        const direction = this.directions[0];
+        let x: number = this.lastCoordinate.getX();
+        let y: number = this.lastCoordinate.getY();
+
+        if (
+          direction === Direction.NORTH &&
+          this.inRange(x) &&
+          this.inRange(y - 1)
+        ) {
+          coordinate = new Coordinate(x, y - 1);
+        } else if (
+          direction === Direction.SOUTH &&
+          this.inRange(x) &&
+          this.inRange(y + 1)
+        ) {
+          coordinate = new Coordinate(x, y + 1);
+        } else if (
+          direction === Direction.EAST &&
+          this.inRange(x + 1) &&
+          this.inRange(y)
+        ) {
+          coordinate = new Coordinate(x + 1, y);
+        } else if (
+          direction === Direction.WEST &&
+          this.inRange(x - 1) &&
+          this.inRange(y)
+        ) {
+          coordinate = new Coordinate(x - 1, y);
+        }
+
+        if (!coordinate && this.lastCoordinate !== this.originalCoordinate) {
+          this.lastCoordinate = this.originalCoordinate;
+          this.directions = [
+            Direction.NORTH,
+            Direction.SOUTH,
+            Direction.EAST,
+            Direction.WEST,
+          ];
+          hit = true;
+          continue;
+        }
+        const tries = ai.getMisses().concat(ai.getHits());
+        if (
+          coordinate &&
+          tries.includes(coordinate.toString()) &&
+          this.directions.length > 1
+        ) {
+          this.directions.shift();
+          hit = true;
+          continue;
+        } else if (
+          coordinate &&
+          tries.includes(coordinate.toString()) &&
+          this.directions.length <= 1
+        ) {
+          if (this.lastCoordinate !== this.originalCoordinate) {
+            this.lastCoordinate = this.originalCoordinate;
+            this.directions = [
+              Direction.NORTH,
+              Direction.SOUTH,
+              Direction.EAST,
+              Direction.WEST,
+            ];
+            hit = true;
+            continue;
+          }
+          hit = false;
+          this.lastCoordinate = null;
+          this.originalCoordinate = null;
+          coordinate = null;
+        }
+      }
+
+      if (!coordinate) {
+        const x = Math.floor(
+          Math.random() * this.game.getPlayer1().getGameboard().getSize()
+        );
+        const y = Math.floor(
+          Math.random() * this.game.getPlayer1().getGameboard().getSize()
+        );
+        coordinate = new Coordinate(x, y);
+      }
+
       const tries = ai.getMisses().concat(ai.getHits());
       if (tries.includes(coordinate.toString())) {
         hit = true;
         continue;
       }
+
       const cell = document.querySelector(
         `#board-1 [data-x-coordinate="${coordinate.getX()}"][data-y-coordinate="${coordinate.getY()}"]`
       ) as HTMLDivElement;
@@ -446,6 +534,14 @@ export default class Play extends View {
       this.explode(cell);
 
       if (sink) {
+        this.target = false;
+        this.directions = [
+          Direction.NORTH,
+          Direction.SOUTH,
+          Direction.EAST,
+          Direction.WEST,
+        ];
+
         ai.addHit(coordinate.toString());
         cell.classList.remove('active--blue');
 
@@ -475,7 +571,13 @@ export default class Play extends View {
           dialog.showModal();
         }
       } else if (hit) {
-        console.log('hit', coordinate.toString());
+        if (!this.target) {
+          this.originalCoordinate = coordinate;
+        }
+        this.lastCoordinate = coordinate;
+        if (!this.target) {
+          this.target = true;
+        }
 
         ai.addHit(coordinate.toString());
         cell.classList.remove('active--blue');
@@ -492,7 +594,9 @@ export default class Play extends View {
           }
         }, 4000);
       } else {
-        console.log('miss', coordinate.toString());
+        if (this.target && this.lastCoordinate) {
+          this.directions.shift();
+        }
 
         ai.addMiss(coordinate.toString());
 
@@ -502,9 +606,8 @@ export default class Play extends View {
           `<p class="miss-alert fade-in-out font-bold [text-shadow:none] text-center bg-red-200 text-red-700 absolute top-3 px-8 py-2 rounded-md shadow-md text-sm">Miss!</p>`
         );
         setTimeout(() => {
-          (
-            document.querySelector('.miss-alert') as HTMLParagraphElement
-          ).remove();
+          const missAlert = document.querySelector('.miss-alert');
+          if (missAlert) missAlert.remove();
         }, 4000);
       }
       await sleep(500);
@@ -544,6 +647,22 @@ export default class Play extends View {
       this.game.getPlayer2().addMiss(coordinate.toString());
     }
   };
+
+  private inRange = (n: number): boolean => {
+    return n >= 0 && n <= 9;
+  };
 }
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+enum Direction {
+  NORTH,
+  SOUTH,
+  EAST,
+  WEST,
+}
+
+enum Axis {
+  VERTICAL,
+  HORIZONTAL,
+}
