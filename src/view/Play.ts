@@ -144,13 +144,6 @@ export default class Play extends View {
         return;
       }
       (document.querySelector('#board-1') as HTMLElement).scrollIntoView();
-      scrollButton1.classList.toggle('scroll-button--active');
-      scrollButton2.classList.toggle('scroll-button--active');
-      if (board1.classList.contains('primary-board')) {
-        boardLabel.innerText = 'Enemy board';
-      } else {
-        boardLabel.innerText = 'Your board';
-      }
     });
 
     scrollButton2.addEventListener('click', (e: Event): void => {
@@ -158,14 +151,6 @@ export default class Play extends View {
         return;
       }
       (document.querySelector('#board-2') as HTMLElement).scrollIntoView();
-      scrollButton2.classList.toggle('scroll-button--active');
-      scrollButton1.classList.toggle('scroll-button--active');
-
-      if (board2.classList.contains('primary-board')) {
-        boardLabel.innerText = 'Enemy board';
-      } else {
-        boardLabel.innerText = 'Your board';
-      }
     });
 
     let target = '';
