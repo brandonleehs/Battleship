@@ -419,6 +419,7 @@ export default class Play extends View {
   private randomAttack = async (): Promise<void> => {
     let hit = false,
       sink = false;
+    const ai = this.game.getPlayer2();
     const body = document.querySelector('body') as HTMLBodyElement;
     do {
       const x = Math.floor(
@@ -428,6 +429,11 @@ export default class Play extends View {
         Math.random() * this.game.getPlayer1().getGameboard().getSize()
       );
       const coordinate = new Coordinate(x, y);
+      const tries = ai.getMisses().concat(ai.getHits());
+      if (tries.includes(coordinate.toString())) {
+        hit = true;
+        continue;
+      }
       const cell = document.querySelector(
         `#board-1 [data-x-coordinate="${coordinate.getX()}"][data-y-coordinate="${coordinate.getY()}"]`
       ) as HTMLDivElement;
@@ -440,6 +446,7 @@ export default class Play extends View {
       this.explode(cell);
 
       if (sink) {
+        ai.addHit(coordinate.toString());
         cell.classList.remove('active--blue');
 
         cell.classList.add('destroyed');
@@ -468,6 +475,9 @@ export default class Play extends View {
           dialog.showModal();
         }
       } else if (hit) {
+        console.log('hit', coordinate.toString());
+
+        ai.addHit(coordinate.toString());
         cell.classList.remove('active--blue');
 
         cell.classList.add('destroyed');
@@ -482,6 +492,10 @@ export default class Play extends View {
           }
         }, 4000);
       } else {
+        console.log('miss', coordinate.toString());
+
+        ai.addMiss(coordinate.toString());
+
         cell.classList.add('miss');
         body.insertAdjacentHTML(
           'beforeend',

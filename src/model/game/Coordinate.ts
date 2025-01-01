@@ -22,6 +22,12 @@ export default class Coordinate {
 
   public static fromString = (coordinate: string): Coordinate => {
     let asciiUppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if (coordinate.length > 2) {
+      return new Coordinate(
+        asciiUppercase.indexOf(coordinate[0]),
+        parseInt(coordinate.slice(1)) - 1
+      );
+    }
     return new Coordinate(
       asciiUppercase.indexOf(coordinate[0]),
       parseInt(coordinate[1]) - 1
