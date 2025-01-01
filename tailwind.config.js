@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{ts,tsx,html,js}'],
+  safelist: ['grid-rows-11', 'grid-cols-11'],
   theme: {
     screens: {
       xs: '425px',
