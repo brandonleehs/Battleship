@@ -11,7 +11,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Template Repo',
+      title: 'Battleship',
     }),
   ],
   module: {
