@@ -78,8 +78,12 @@ body {
     @apply [border-image:linear-gradient(to_right,rgba(185,43,39,0.25),rgba(21,101,192,0.25))_fill_1];
   }
 
-  .text-shadow {
+  .text-shadow-md {
     @apply [text-shadow:-2px_-2px_0_rgba(48,67,111,0.682),2px_-2px_0_rgba(48,67,111,0.682),-2px_2px_0_rgba(48,67,111,0.682),2px_2px_0_rgba(48,67,111,0.682)];
+  }
+
+  .text-shadow-sm {
+    text-shadow: white 1px 0 10px;
   }
 }
 
