@@ -9,7 +9,6 @@ import SetupClearButton from './SetupClearButton';
 import SetupRandomButton from './SetupRandomButton';
 import SetupReadyButton from './SetupReadyButton';
 import Setup from './Setup';
-import Player from 'Model/player/Player';
 
 export default class SetupEventManager {
   private boardSize: number;

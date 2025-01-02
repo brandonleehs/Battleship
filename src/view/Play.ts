@@ -179,7 +179,11 @@ export default class Play extends View {
     for (let i = 0; i < cellList.length; i++) {
       const cell = cellList[i];
       cell.addEventListener('click', async (e: Event) => {
-        if (this.flag > 0 || cell.className.includes('active')) {
+        if (
+          this.flag > 0 ||
+          cell.className.includes('active') ||
+          cell.className.includes('miss')
+        ) {
           return;
         }
         this.flag++;
@@ -288,6 +292,12 @@ export default class Play extends View {
       });
 
       cell.addEventListener('mouseover', (e: Event): void => {
+        if (
+          cell.className.includes('active') ||
+          cell.className.includes('miss')
+        ) {
+          return;
+        }
         cell.classList.add('target', target);
       });
 
@@ -338,10 +348,6 @@ export default class Play extends View {
     }
 
     const coordinateToShipMap = player.getGameboard().getCoordinateToShipMap();
-    console.log(
-      player.getGameboard().getCoordinateToShipMap(),
-      otherPlayer.getGameboard().getCoordinateToShipMap()
-    );
     for (const coordinateString in coordinateToShipMap) {
       const coordinate = Coordinate.fromString(coordinateString);
       const cell = document.querySelector(

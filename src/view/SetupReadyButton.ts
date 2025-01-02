@@ -1,9 +1,7 @@
 import SetupEvent from './SetupEvent';
-import Player from 'Model/player/Player';
 import SetupEventManager from './SetupEventManager';
 import Setup from './Setup';
 import Play from './Play';
-import Gameboard from 'Model/game/Gameboard';
 
 export default class SetupReadyButton extends SetupEvent {
   private setup: Setup;
@@ -21,8 +19,6 @@ export default class SetupReadyButton extends SetupEvent {
     }
     const player1 = this.setupEventManager.getSetup().getPlayer1();
     const player2 = this.setupEventManager.getSetup().getPlayer2();
-    // const player1 = new Player(this.setupEventManager.getBoardSize());
-    // const player2 = new Player(this.setupEventManager.getBoardSize());
 
     if (this.setup.getPlayer() === 1 && this.setup.getAi()) {
       player1.setGameboard(this.setupEventManager.getGameboard());
