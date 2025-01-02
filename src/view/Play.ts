@@ -338,6 +338,10 @@ export default class Play extends View {
     }
 
     const coordinateToShipMap = player.getGameboard().getCoordinateToShipMap();
+    console.log(
+      player.getGameboard().getCoordinateToShipMap(),
+      otherPlayer.getGameboard().getCoordinateToShipMap()
+    );
     for (const coordinateString in coordinateToShipMap) {
       const coordinate = Coordinate.fromString(coordinateString);
       const cell = document.querySelector(

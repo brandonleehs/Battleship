@@ -9,17 +9,18 @@ import SetupClearButton from './SetupClearButton';
 import SetupRandomButton from './SetupRandomButton';
 import SetupReadyButton from './SetupReadyButton';
 import Setup from './Setup';
+import Player from 'Model/player/Player';
 
 export default class SetupEventManager {
-  boardSize: number;
-  setup: Setup;
-  setupClickEvent: SetupClickEvent;
-  setupMouseoverEvent: SetupMouseoverEvent;
-  setupMouseoutEvent: SetupMouseoutEvent;
-  setupRotateButton: SetupRotateButton;
-  setupClearButton: SetupClearButton;
-  setupRandomButton: SetupRandomButton;
-  setupReadyButton: SetupReadyButton;
+  private boardSize: number;
+  private setup: Setup;
+  private setupClickEvent: SetupClickEvent;
+  private setupMouseoverEvent: SetupMouseoverEvent;
+  private setupMouseoutEvent: SetupMouseoutEvent;
+  private setupRotateButton: SetupRotateButton;
+  private setupClearButton: SetupClearButton;
+  private setupRandomButton: SetupRandomButton;
+  private setupReadyButton: SetupReadyButton;
   private shipSizes: number[];
   private gameboard: Gameboard;
   private shipToBePlaced: Ship | null;
@@ -120,5 +121,9 @@ export default class SetupEventManager {
 
   public setShipSizes = (shipSizes: number[]): void => {
     this.shipSizes = shipSizes;
+  };
+
+  public getSetup = (): Setup => {
+    return this.setup;
   };
 }

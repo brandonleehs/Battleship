@@ -1,16 +1,22 @@
 import View from './View';
 import SetupEventManager from './SetupEventManager';
+import Player from 'Model/player/Player';
 
 export default class Setup extends View {
   private boardSize: number;
   private ai: boolean;
   private player: number;
+  private player1: Player;
+  private player2: Player;
+
   setupEventManager: SetupEventManager;
 
   constructor(options: options) {
     super();
     Object.assign(this, options);
     this.player = 1;
+    this.player1 = new Player(this.boardSize);
+    this.player2 = new Player(this.boardSize);
   }
 
   public render = (): void => {
@@ -89,6 +95,14 @@ export default class Setup extends View {
   private bindEvents = (): void => {
     this.setupEventManager = new SetupEventManager(this);
     this.setupEventManager.bindEvents();
+  };
+
+  public getPlayer1 = (): Player => {
+    return this.player1;
+  };
+
+  public getPlayer2 = (): Player => {
+    return this.player2;
   };
 }
 
