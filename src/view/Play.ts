@@ -179,7 +179,7 @@ export default class Play extends View {
     for (let i = 0; i < cellList.length; i++) {
       const cell = cellList[i];
       cell.addEventListener('click', async (e: Event) => {
-        if (this.flag > 0) {
+        if (this.flag > 0 || cell.className.includes('active')) {
           return;
         }
         this.flag++;
