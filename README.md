@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a modern, web-based implementation of the classic Battleship game. It includes both a 2-player mode and a challenging single-player mode against a smart computer opponent.
+This project is a modern, web-based implementation of the classic Battleship game. It includes both a 2-player mode and a challenging single-player mode against a smart computer opponent. Deployed on [Github Pages](https://brandonleehs.github.io/Battleship/).
 
 ## Key Features
 
