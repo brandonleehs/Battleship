@@ -9,15 +9,15 @@ body {
 
 @layer components {
   .outline-button {
-    @apply font-bold transition-all ease-in-out relative hover:bottom-0.5 hover:shadow-[0_0_5px_#e4807d,_0_0_25px] max-w-28 w-full border-2 border-solid rounded-md py-2 px-4;
+    @apply font-bold transition-all ease-in-out relative hover:bottom-0.5 max-w-28 w-full border-2 border-solid rounded-md py-2 px-4;
   }
 
   .outline-button--red {
-    @apply outline-button border-[#e4807d] text-red-400 hover:text-neutral-50 hover:bg-red-400;
+    @apply outline-button border-[#e4807d] text-red-400 hover:text-neutral-50 hover:bg-red-400 hover:shadow-[0_0_5px_#e4807d,_0_0_25px];
   }
 
   .outline-button--blue {
-    @apply outline-button text-blue-400 hover:text-neutral-50 hover:bg-blue-400 border-[#6ca9ef];
+    @apply outline-button text-blue-400 hover:text-neutral-50 hover:bg-blue-400 border-[#6ca9ef] hover:shadow-[0_0_5px_#6ca9ef,_0_0_25px];
   }
 
   .boardView {
